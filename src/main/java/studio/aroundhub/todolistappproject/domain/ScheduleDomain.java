@@ -1,9 +1,7 @@
 package studio.aroundhub.todolistappproject.domain;
-
 import jakarta.persistence.*;
 import lombok.*;
 import studio.aroundhub.todolistappproject.dto.ModificationRequest;
-
 import java.time.LocalDate;
 
 @Entity
@@ -13,7 +11,6 @@ import java.time.LocalDate;
 public class ScheduleDomain {
     @Column(name = "email",updatable = false,nullable = false)
     private String email;
-    //email을 기본 키로 설정한다. 이메일 중심의 쿼리를 위해서
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,14 +23,14 @@ public class ScheduleDomain {
     @Column(name = "category",nullable = false)
     private String category;
 
-    @Column(name = "Schedule", nullable = false)
+    @Column(name = "schedule", nullable = false)
     private LocalDate schedule;
 
-    @Column(name = "reminderDate",nullable = true)//reminder의 경우 꼭 설정 필요 x
-    private LocalDate reminderDate;
+    @Column(name = "reminderdate",nullable = true)//reminder의 경우 꼭 설정 필요 x
+    private LocalDate reminderdate;
 
-    @Column(name = "CompletionStatus",nullable = false)
-    boolean CompletionStatus = false;
+    @Column(name = "completionstatus",nullable = false)
+    boolean CompletionStatus;
     //기본적으로 false로 설정한다.
 
     @Builder
@@ -42,15 +39,15 @@ public class ScheduleDomain {
         this.title = title;
         this.category = category;
         this.schedule = schedule;
-        this.reminderDate = reminderDate;
+        this.reminderdate = reminderDate;
         CompletionStatus = false;
     }
 
     public void ModificationEntity(ModificationRequest modificationRequest) {
         this.title = modificationRequest.getTitle();
         this.category = modificationRequest.getCategory();
-        this.schedule = modificationRequest.getSchdeule();
-        this.reminderDate = modificationRequest.getReminderDate();
+        this.schedule = modificationRequest.getSchedule();
+        this.reminderdate = modificationRequest.getReminderDate();
         this.CompletionStatus = modificationRequest.isCompletionStatus();
     }//기존 데이터를 수정하기 위한 메서드
 

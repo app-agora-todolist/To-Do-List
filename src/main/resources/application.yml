@@ -1,3 +1,35 @@
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
+spring:
+  config:
+    activate:
+      on-profile:
+        active: local
+
+---
+spring:
+  profile: local
+
+  sql:
+    init:
+      platform: h2
+
+  jpa:
+    open-in-view: false
+    defer-datasource-initialization: true
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    data: classpath:data-h2.sql
+
+  h2:
+    console:
+      enabled: true
+
+  main:
+    allow-circular-references: true

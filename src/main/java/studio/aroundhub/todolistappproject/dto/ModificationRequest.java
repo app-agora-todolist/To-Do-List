@@ -13,7 +13,7 @@ public class ModificationRequest {
     private String email;
     private String title;
     private String category;
-    private LocalDate schdeule;
+    private LocalDate schedule;
     private LocalDate reminderDate;
     private boolean CompletionStatus;
 }

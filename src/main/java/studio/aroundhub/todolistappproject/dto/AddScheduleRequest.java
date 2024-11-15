@@ -16,11 +16,11 @@ public class AddScheduleRequest {
     private String email;
     private   String title;
     private  String category;
-    private  LocalDate Schedule;//날짜
-    private   LocalDate reminderDate =null;
+    private  LocalDate schedule;//날짜
+    private   LocalDate reminderdate;
 
     public ScheduleDomain toEntity() {
-        return ScheduleDomain.builder().email(email).title(title).category(category).schedule(Schedule).reminderDate(reminderDate).build();
+        return ScheduleDomain.builder().email(email).title(title).category(category).schedule(schedule).reminderDate(reminderdate).build();
     }
 }
 
