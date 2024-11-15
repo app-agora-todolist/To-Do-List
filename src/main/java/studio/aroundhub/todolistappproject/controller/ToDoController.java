@@ -53,7 +53,6 @@ public class ToDoController {
     @GetMapping("/schedule")
      public ResponseEntity<List<ScheduleDomain>> getMonthList(@RequestParam String email, @RequestParam  int year) {
         //년도와 달을 기반으로 데이터를 가져온다.
-
             List<ScheduleDomain> list = toDoService.YearGetAll(year,email);
             if(list == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
