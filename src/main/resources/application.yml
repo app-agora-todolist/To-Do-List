@@ -17,8 +17,11 @@ spring:
     hibernate:
       ddl-auto: update # 기존 create-drop에서 update로 수정
 
+  jwt:
+    secret: your-secret-key
+
   datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE # 데이터베이스 종료 방지 설정 추가
+    url: jdbc:h2:tcp://localhost/~/test  # 데이터베이스 종료 방지 설정 추가
     driver-class-name: org.h2.Driver
     username: sa
     password:

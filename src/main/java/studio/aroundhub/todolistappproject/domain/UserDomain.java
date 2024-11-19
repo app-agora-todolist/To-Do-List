@@ -17,6 +17,7 @@ public class UserDomain {
 
     private String username;
     private String password;
+    private String email;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> roles = new HashSet<>();
