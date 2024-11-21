@@ -10,7 +10,7 @@ version = '0.0.1-SNAPSHOT'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(23)
+        languageVersion = JavaLanguageVersion.of(17)
     }
 }
 
@@ -39,9 +39,9 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'  // JJJWT API 버전
     implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'  // JJJWT 구현체 버전
     implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5' // Jackson 의존성
-    implementation 'org.springframework.security:spring-security-core:6.0.0'
-    implementation 'org.springframework.security:spring-security-web:6.0.0'
-    implementation 'org.springframework.security:spring-security-config:6.0.0'
+    implementation 'org.springframework.security:spring-security-core:6.3.4'
+    implementation 'org.springframework.security:spring-security-web:6.3.4'
+    implementation 'org.springframework.security:spring-security-config:6.3.4'
 
 
 

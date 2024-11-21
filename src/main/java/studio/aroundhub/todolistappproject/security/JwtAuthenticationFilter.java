@@ -5,15 +5,15 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.lang.NonNull;
-import org.springframework.security.core.Authentication;  // Authentication import 추가
-import org.springframework.stereotype.Component;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -25,33 +25,49 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain)
-            throws ServletException, IOException {
-        if ("/auth/login".equals(request.getRequestURI())) {
-            filterChain.doFilter(request, response); // JWT 인증 없이 바로 다음 필터로 진행
+    protected void doFilterInternal(
+            @NonNull HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain
+    ) throws ServletException, IOException {
+        // 특정 경로 우회 처리
+        String requestURI = request.getRequestURI();
+        if (isExcludedFromFilter(requestURI)) {
+            filterChain.doFilter(request, response);
             return;
         }
 
-        // 요청에서 JWT 토큰을 추출
-        String token = getTokenFromRequest(request);
+        try {
+            // JWT 토큰 추출 및 검증
+            String token = getTokenFromRequest(request);
+            if (token != null && jwtTokenProvider.validateToken(token)) {
+                String username = jwtTokenProvider.getUsernameFromToken(token);
+                List<SimpleGrantedAuthority> authorities = jwtTokenProvider.getAuthoritiesFromToken(token);
 
-        // 토큰이 존재하고 유효한지 확인
-        if (token != null && jwtTokenProvider.validateToken(token)) {
-            // 유효한 토큰인 경우 사용자 인증 정보를 SecurityContext에 설정
-            String username = jwtTokenProvider.getUsernameFromToken(token);
-            UsernamePasswordAuthenticationToken authentication =
-                    new UsernamePasswordAuthenticationToken(username, null, new ArrayList<>()); // 권한 추가 가능
-            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+                // SecurityContext에 인증 정보 설정
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(username, null, authorities);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+        } catch (Exception ex) {
+            // 로그 추가 및 요청 처리 지속
+            System.err.println("JWT 필터 처리 중 오류 발생: " + ex.getMessage());
         }
 
-        filterChain.doFilter(request, response); // 다음 필터로 요청 전달
+        // 필터 체인의 다음 필터로 요청 전달
+        filterChain.doFilter(request, response);
     }
 
+    // 특정 요청 URI는 필터에서 제외
+    private boolean isExcludedFromFilter(String requestURI) {
+        return requestURI.equals("/auth/signup") || requestURI.equals("/auth/login");
+    }
+
+    // 요청 헤더에서 JWT 추출
     private String getTokenFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7); // "Bearer " 이후 부분만 추출
+            return bearerToken.substring(7); // "Bearer " 이후의 토큰 값 추출
         }
         return null;
     }

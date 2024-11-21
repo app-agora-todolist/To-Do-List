@@ -33,3 +33,5 @@ spring:
 
   main:
     allow-circular-references: true
+
+    secret: your-secret-key

@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import studio.aroundhub.todolistappproject.domain.UserDomain;
 import studio.aroundhub.todolistappproject.dto.LoginRequest;
+import studio.aroundhub.todolistappproject.dto.LoginResponse;
 import studio.aroundhub.todolistappproject.dto.SignUpRequest;
 import studio.aroundhub.todolistappproject.repository.UserDomainRepository;
 import studio.aroundhub.todolistappproject.security.JwtTokenProvider;
@@ -30,50 +31,42 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public ResponseEntity<String> signUp(SignUpRequest signUpRequest) {
-        if (userDomainRepository.findByUsername(signUpRequest.getUsername()).isPresent()) {
-            return ResponseEntity.badRequest().body("Username already exists");
+    public ResponseEntity<LoginResponse> signUp(SignUpRequest signUpRequest) {
+        if (userDomainRepository.existsByUsername(signUpRequest.getUsername())) {
+            return ResponseEntity.badRequest().body(new LoginResponse("Username already exists", null));
         }
 
-        UserDomain newUser = new UserDomain();
-        newUser.setUsername(signUpRequest.getUsername());
-        newUser.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
-        userDomainRepository.save(newUser);
+        UserDomain user = new UserDomain();
+        user.setUsername(signUpRequest.getUsername());
+        user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
+        user.setEmail(signUpRequest.getEmail());
+        userDomainRepository.save(user);
 
-        return ResponseEntity.ok("User registered successfully");
+        // 고유 토큰 반환
+        return ResponseEntity.status(201).body(new LoginResponse("User signed up successfully", user.getToken()));
     }
 
     @Override
-    public ResponseEntity<String> login(LoginRequest loginRequest) {
-        Optional<UserDomain> userOptional = userDomainRepository.findByUsername(loginRequest.getUsername());
+    public ResponseEntity<LoginResponse> login(LoginRequest loginRequest) {
+        Optional<UserDomain> userOpt = userDomainRepository.findByUsername(loginRequest.getUsername());
 
-        if (userOptional.isPresent()) {
-            UserDomain user = userOptional.get();
+        if (userOpt.isPresent()) {
+            UserDomain user = userOpt.get();
             if (passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-                String token = jwtTokenProvider.createToken(user.getUsername());
-                return ResponseEntity.ok(token);
+                // 고유 토큰 반환
+                return ResponseEntity.ok(new LoginResponse("Login successful", user.getToken()));
             }
         }
-        return ResponseEntity.status(401).body("Invalid username or password");
+
+        return ResponseEntity.status(401).body(new LoginResponse("Invalid credentials", null));
     }
 
     @Override
-    public ResponseEntity<UserDomain> getCurrentUser(String token) {
+    public ResponseEntity<LoginResponse> getCurrentUser(String token) {
         if (jwtTokenProvider.validateToken(token)) {
             String username = jwtTokenProvider.getUsernameFromToken(token);
-            Optional<UserDomain> user = userDomainRepository.findByUsername(username);
-            return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+            return ResponseEntity.ok(new LoginResponse("Current user: " + username, token));
         }
-        return ResponseEntity.status(401).build();
-    }
-
-    public boolean authenticate(String username, String password) {
-        Optional<UserDomain> userOptional = userDomainRepository.findByUsername(username);
-        if (userOptional.isPresent()) {
-            UserDomain user = userOptional.get();
-            return passwordEncoder.matches(password, user.getPassword());
-        }
-        return false;
+        return ResponseEntity.status(401).body(new LoginResponse("Invalid token", null));
     }
 }
-
