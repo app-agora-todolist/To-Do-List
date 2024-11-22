@@ -36,14 +36,14 @@ public class AuthServiceImpl implements AuthService {
             return ResponseEntity.badRequest().body(new LoginResponse("Username already exists", null));
         }
 
-        UserDomain user = new UserDomain();
-        user.setUsername(signUpRequest.getUsername());
-        user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
-        user.setEmail(signUpRequest.getEmail());
-        userDomainRepository.save(user);
+        UserDomain newUser = new UserDomain();
+        newUser.setUsername(signUpRequest.getUsername());
+        newUser.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
+        newUser.setEmail(signUpRequest.getEmail());
+        userDomainRepository.save(newUser);
 
         // 고유 토큰 반환
-        return ResponseEntity.status(201).body(new LoginResponse("User signed up successfully", user.getToken()));
+        return ResponseEntity.status(201).body(new LoginResponse("User signed up successfully", null));
     }
 
     @Override

@@ -17,7 +17,7 @@ public class JwtTokenProvider {
     @Value("${jwt.secret}")
     private String secretKey;
 
-    private final long validityInMilliseconds = 3600000; // 1 hour
+    private final long validityInMilliseconds = 2592000000L; // 30일
 
     // Signing Key 생성
     private Key getSigningKey() {

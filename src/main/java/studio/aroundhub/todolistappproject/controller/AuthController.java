@@ -38,10 +38,10 @@ public class AuthController {
         }
 
         try {
-            LoginResponse response = authService.signUp(signUpRequest).getBody();
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            authService.signUp(signUpRequest); // 회원가입 로직 호출
+            return ResponseEntity.status(HttpStatus.CREATED).body("User signed successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error during signup: " + e.getMessage());
         }
     }
 
