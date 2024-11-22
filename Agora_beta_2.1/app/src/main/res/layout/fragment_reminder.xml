@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <!-- 카테고리 영역 대신 리마인더 영역 (4x1 버튼 그리드) -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/reminder_grid"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp">
+
+        <!-- Hour Before 버튼 -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/reminder_hour_before"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintWidth_percent="0.45"
+            app:layout_constraintHeight_default="wrap"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:cardCornerRadius="8dp"
+            app:cardBackgroundColor="#333333"
+            android:layout_margin="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="12dp">
+
+<!--                <ImageView-->
+<!--                    android:layout_width="36dp"-->
+<!--                    android:layout_height="36dp"-->
+<!--                    android:layout_marginStart="18dp"-->
+<!--                    android:layout_marginEnd="18dp"-->
+<!--                    android:src="@drawable/category_item_hour_before_24"-->
+<!--                    app:tint="#FFFFFF" />-->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/item_reminder_today"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Day Before 버튼 -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/reminder_day_before"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintWidth_percent="0.45"
+            app:layout_constraintHeight_default="wrap"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:cardCornerRadius="8dp"
+            app:cardBackgroundColor="#333333"
+            android:layout_margin="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="12dp">
+
+<!--                <ImageView-->
+<!--                    android:layout_width="36dp"-->
+<!--                    android:layout_height="36dp"-->
+<!--                    android:layout_marginStart="6dp"-->
+<!--                    android:layout_marginEnd="12dp"-->
+<!--                    android:src="@drawable/category_item_day_before_24"-->
+<!--                    app:tint="#FFFFFF" />-->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/item_reminder_day_before"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Week Before 버튼 -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/reminder_week_before"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintWidth_percent="0.45"
+            app:layout_constraintHeight_default="wrap"
+            app:layout_constraintTop_toBottomOf="@id/reminder_hour_before"
+            app:layout_constraintStart_toStartOf="parent"
+            app:cardCornerRadius="8dp"
+            app:cardBackgroundColor="#333333"
+            android:layout_margin="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="12dp">
+
+
+<!--                <ImageView-->
+<!--                    android:layout_width="36dp"-->
+<!--                    android:layout_height="36dp"-->
+<!--                    android:layout_marginStart="6dp"-->
+<!--                    android:layout_marginEnd="6dp"-->
+<!--                    android:src="@drawable/category_item_week_before_24"-->
+<!--                    app:tint="#FFFFFF" />-->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/item_reminder_day_two_before"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Month Before 버튼 -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/reminder_month_before"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintWidth_percent="0.45"
+            app:layout_constraintHeight_default="wrap"
+            app:layout_constraintTop_toBottomOf="@id/reminder_day_before"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:cardCornerRadius="8dp"
+            app:cardBackgroundColor="#333333"
+            android:layout_margin="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="12dp">
+
+<!--                <ImageView-->
+<!--                    android:layout_width="36dp"-->
+<!--                    android:layout_height="36dp"-->
+<!--                    android:layout_marginStart="9dp"-->
+<!--                    android:layout_marginEnd="9dp"-->
+<!--                    android:src="@drawable/category_item_month_before_24"-->
+<!--                    app:tint="#FFFFFF" />-->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/item_reminder_week_before"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- 할 일 목록 RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_todo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        android:paddingBottom="56dp"
+    android:clipToPadding="false"
+    android:background="#1A1A1A"
+    app:layout_constraintTop_toBottomOf="@id/reminder_grid"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- FloatingActionButton to Add Task -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Add Task"
+        android:src="@drawable/ic_add"
+        android:tint="#FFFFFF"
+        android:backgroundTint="@color/orange"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

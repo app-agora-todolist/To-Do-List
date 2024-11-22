@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 선택된 아이템의 색상 (완전한 흰색) -->
+    <item android:color="#FFFFFFFF" android:state_checked="true" />
+    <!-- 비선택된 아이템의 색상 (50% 투명도 적용된 흰색) -->
+    <item android:color="#80FFFFFF" />
+</selector>
