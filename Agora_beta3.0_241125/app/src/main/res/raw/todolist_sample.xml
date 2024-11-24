@@ -1,0 +1,23 @@
+<tasks>
+    <task id="1">
+        <title>Sample Task 1</title>
+        <date>1732300800000</date>
+        <reminder>DAY_BEFORE</reminder>
+        <category>Work</category>
+        <isCompleted>false</isCompleted>
+    </task>
+    <task id="2">
+        <title>Sample Task 2</title>
+        <date>1732387200000</date>
+        <reminder>WEEK_BEFORE</reminder>
+        <category>Personal</category>
+        <isCompleted>false</isCompleted>
+    </task>
+    <task id="3">
+        <title>Sample Task 3</title>
+        <date>1732473600000</date>
+        <reminder>DAY_TWO_BEFORE</reminder>
+        <category>Birthday</category>
+        <isCompleted>false</isCompleted>
+    </task>
+</tasks>
